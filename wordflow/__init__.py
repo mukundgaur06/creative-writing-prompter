@@ -10,6 +10,7 @@ Only the Python standard library is used. Typical use::
 """
 
 from .corpus import Corpus, CorpusError, build_corpus, corpus_from_file, split_train_test
+from .ngram_model import NGramModel
 from .preprocessing import (
     BOS,
     EOS,
@@ -20,6 +21,7 @@ from .preprocessing import (
     tokenize,
     tokenize_sentences,
 )
+from .smoothing import add_k_probability, mle_probability
 
 __version__ = "1.0.0"
 
@@ -28,10 +30,13 @@ __all__ = [
     "Corpus",
     "CorpusError",
     "EOS",
+    "NGramModel",
     "UNK",
     "Vocabulary",
+    "add_k_probability",
     "build_corpus",
     "corpus_from_file",
+    "mle_probability",
     "pad_sentence",
     "split_sentences",
     "split_train_test",

@@ -1,7 +1,10 @@
 """One test per milestone in README.md."""
 import pytest
 
-from app.core import FANTASY_CORPUS, prepare_corpus
+from app.core import FANTASY_CORPUS, mle_probability, prepare_corpus, train_model
+from wordflow.preprocessing import tokenize
+
+TOY = [tokenize(s) for s in ("I love Python", "I love machine learning", "I love AI")]
 
 
 # Milestone 1: Prepare a text corpus of short stories.
@@ -15,9 +18,12 @@ def test_milestone_1():
 
 
 # Milestone 2: Implement n-gram counting and maximum-likelihood probabilities.
-@pytest.mark.skip(reason="remove this line when you start milestone 2")
 def test_milestone_2():
-    raise NotImplementedError("write the test for milestone 2")
+    """Counting gives exact maximum-likelihood probabilities on a tiny corpus."""
+    model = train_model(TOY)
+    assert mle_probability(model, "love", ("i",)) == 1.0
+    assert mle_probability(model, "python", ("i", "love")) == pytest.approx(1 / 3)
+    assert mle_probability(model, "dragon", ("i", "love")) == 0.0
 
 
 # Milestone 3: Add add-k smoothing to handle unseen n-grams.
