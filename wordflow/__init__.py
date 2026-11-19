@@ -10,7 +10,9 @@ Only the Python standard library is used. Typical use::
 """
 
 from .corpus import Corpus, CorpusError, build_corpus, corpus_from_file, split_train_test
+from .evaluation import EvaluationResult, compare_models, evaluate, score_sentence
 from .ngram_model import NGramModel
+from .predictor import NextWordPredictor, PredictionResult, Suggestion
 from .preprocessing import (
     BOS,
     EOS,
@@ -30,14 +32,21 @@ __all__ = [
     "Corpus",
     "CorpusError",
     "EOS",
+    "EvaluationResult",
     "NGramModel",
+    "NextWordPredictor",
+    "PredictionResult",
+    "Suggestion",
     "UNK",
     "Vocabulary",
     "add_k_probability",
     "build_corpus",
+    "compare_models",
     "corpus_from_file",
+    "evaluate",
     "mle_probability",
     "pad_sentence",
+    "score_sentence",
     "split_sentences",
     "split_train_test",
     "tokenize",

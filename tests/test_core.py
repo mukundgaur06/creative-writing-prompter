@@ -1,7 +1,7 @@
 """One test per milestone in README.md."""
 import pytest
 
-from app.core import FANTASY_CORPUS, mle_probability, prepare_corpus, train_model
+from app.core import FANTASY_CORPUS, mle_probability, prepare_corpus, smoothed_probability, train_model
 from wordflow.preprocessing import tokenize
 
 TOY = [tokenize(s) for s in ("I love Python", "I love machine learning", "I love AI")]
@@ -27,9 +27,15 @@ def test_milestone_2():
 
 
 # Milestone 3: Add add-k smoothing to handle unseen n-grams.
-@pytest.mark.skip(reason="remove this line when you start milestone 3")
 def test_milestone_3():
-    raise NotImplementedError("write the test for milestone 3")
+    """Add-k gives unseen words probability mass and still sums to one."""
+    model = train_model(TOY)
+    assert smoothed_probability(model, "dragon", ("i", "love"), k=1) > 0
+    total = sum(model.distribution(("i", "love"), k=1).values())
+    assert total == pytest.approx(1.0)
+    # small k trusts the counts more, so a seen word keeps more of the mass
+    assert smoothed_probability(model, "python", ("i", "love"), k=0.1) > \
+        smoothed_probability(model, "python", ("i", "love"), k=1)
 
 
 # Milestone 4: Develop a function to generate text by sampling from the model.

@@ -40,8 +40,13 @@ def mle_probability(model: NGramModel, word: str, context=()) -> float:
 
 # --- Milestone 3: Add add-k smoothing to handle unseen n-grams.
 # Hint: Implement add-k smoothing to manage out-of-vocabulary n-grams.
-def milestone_3():  # TODO(milestone 3)
-    raise NotImplementedError("TODO(milestone 3)")
+def smoothed_probability(model: NGramModel, word: str, context=(), k: float = 1.0) -> float:
+    """Add-k estimate P(word | context) = (C(context, word) + k) / (C(context) + k * V).
+
+    Every word in the vocabulary gets a non-zero probability, so unseen n-grams no
+    longer break the model. ``k = 1`` is Laplace smoothing; small k trusts the counts more.
+    """
+    return model.probability(word, context, k=k)
 
 
 # --- Milestone 4: Develop a function to generate text by sampling from the model.
