@@ -5,6 +5,7 @@ from pathlib import Path
 from wordflow.corpus import corpus_from_file
 from wordflow.generation import TextGenerator
 from wordflow.ngram_model import NGramModel
+from wordflow.predictor import NextWordPredictor
 from wordflow.preprocessing import tokenize
 
 
@@ -68,5 +69,12 @@ def generate_text(model: NGramModel, seed_text: str = "", max_words: int = 30,
 
 # --- Milestone 5: Create a CLI interface for users to input text and get suggestions.
 # Hint: Build a command-line interface to take user input and display suggestions.
-def milestone_5():  # TODO(milestone 5)
-    raise NotImplementedError("TODO(milestone 5)")
+def suggest_next_words(model: NGramModel, text: str, top_k: int = 5,
+                       k: float = 0.01) -> list[tuple[str, float]]:
+    """The ``top_k`` most probable next words for ``text`` as (word, probability) pairs.
+
+    The command line (``python -m app.cli write --genre fantasy``) wraps this in an
+    interactive story-writing session, see ``wordflow/writer.py``.
+    """
+    result = NextWordPredictor(model).suggest_next(text, top_k=top_k, k=k)
+    return [(s.word, s.probability) for s in result.suggestions]

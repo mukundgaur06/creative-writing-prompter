@@ -1,7 +1,7 @@
 """One test per milestone in README.md."""
 import pytest
 
-from app.core import FANTASY_CORPUS, generate_text, mle_probability, prepare_corpus, smoothed_probability, train_model
+from app.core import FANTASY_CORPUS, generate_text, mle_probability, prepare_corpus, smoothed_probability, suggest_next_words, train_model
 from wordflow.preprocessing import tokenize
 
 TOY = [tokenize(s) for s in ("I love Python", "I love machine learning", "I love AI")]
@@ -50,6 +50,17 @@ def test_milestone_4():
 
 
 # Milestone 5: Create a CLI interface for users to input text and get suggestions.
-@pytest.mark.skip(reason="remove this line when you start milestone 5")
-def test_milestone_5():
-    raise NotImplementedError("write the test for milestone 5")
+def test_milestone_5(tmp_path, capsys):
+    """Suggestions are ranked, and the CLI predicts from a saved model."""
+    model = train_model(TOY)
+    suggestions = suggest_next_words(model, "i love", top_k=3)
+    assert len(suggestions) == 3
+    probabilities = [p for _, p in suggestions]
+    assert probabilities == sorted(probabilities, reverse=True)
+
+    from app.cli import main
+
+    path = tmp_path / "model.json"
+    model.save(path)
+    assert main(["predict", "i love", "--model", str(path)]) == 0
+    assert "Input:" in capsys.readouterr().out
