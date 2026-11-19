@@ -3,6 +3,7 @@
 from pathlib import Path
 
 from wordflow.corpus import corpus_from_file
+from wordflow.generation import TextGenerator
 from wordflow.ngram_model import NGramModel
 from wordflow.preprocessing import tokenize
 
@@ -51,8 +52,18 @@ def smoothed_probability(model: NGramModel, word: str, context=(), k: float = 1.
 
 # --- Milestone 4: Develop a function to generate text by sampling from the model.
 # Hint: Create a sampling function to generate text based on your model's probabilities.
-def milestone_4():  # TODO(milestone 4)
-    raise NotImplementedError("TODO(milestone 4)")
+def generate_text(model: NGramModel, seed_text: str = "", max_words: int = 30,
+                  temperature: float = 1.0, seed: int | None = None, k: float = 0.0) -> str:
+    """Continue ``seed_text`` by sampling one word at a time from the model.
+
+    The same ``seed`` always gives the same text. ``temperature`` below 1 makes the
+    choices more conservative, above 1 more adventurous.
+    """
+    result = TextGenerator(model).generate_text(
+        seed_text, max_words=max_words, temperature=temperature, seed=seed, k=k,
+        stop_at_eos=False,
+    )
+    return result.text
 
 
 # --- Milestone 5: Create a CLI interface for users to input text and get suggestions.

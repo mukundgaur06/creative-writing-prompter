@@ -1,7 +1,7 @@
 """One test per milestone in README.md."""
 import pytest
 
-from app.core import FANTASY_CORPUS, mle_probability, prepare_corpus, smoothed_probability, train_model
+from app.core import FANTASY_CORPUS, generate_text, mle_probability, prepare_corpus, smoothed_probability, train_model
 from wordflow.preprocessing import tokenize
 
 TOY = [tokenize(s) for s in ("I love Python", "I love machine learning", "I love AI")]
@@ -39,9 +39,14 @@ def test_milestone_3():
 
 
 # Milestone 4: Develop a function to generate text by sampling from the model.
-@pytest.mark.skip(reason="remove this line when you start milestone 4")
 def test_milestone_4():
-    raise NotImplementedError("write the test for milestone 4")
+    """Sampling is reproducible for a seed and continues the seed text."""
+    model = train_model(TOY)
+    a = generate_text(model, "i love", max_words=5, seed=1)
+    b = generate_text(model, "i love", max_words=5, seed=1)
+    assert a == b
+    assert a.lower().startswith("i love")
+    assert len(a.split()) > 2
 
 
 # Milestone 5: Create a CLI interface for users to input text and get suggestions.
