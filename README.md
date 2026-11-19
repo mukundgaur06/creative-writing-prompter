@@ -1,6 +1,6 @@
 # Creative Writing Prompter
 
-[![Built with askThili](https://ask.thili.ai/api/v1/public/projects/mqjv39kx74/badge.svg)](https://ask.thili.ai/b/mqjv39kx74)
+[![Built with askThili](https://msrit.ask.thili.ai/api/v1/public/projects/mqjv39kx74/badge.svg)](https://msrit.ask.thili.ai/b/mqjv39kx74)
 [![tests](https://github.com/mukundgaur06/creative-writing-prompter/actions/workflows/ci.yml/badge.svg)](https://github.com/mukundgaur06/creative-writing-prompter/actions/workflows/ci.yml)
 
 A command-line tool for aspiring writers. It suggests the next word of your story,
