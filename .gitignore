@@ -1,4 +1,4 @@
-# Secrets: never commit your real settings
+# Secrets: never commit real settings
 .env
 
 # Python
@@ -7,6 +7,9 @@ __pycache__/
 .venv/
 .pytest_cache/
 
-# Local data
+# Local data and rebuildable artefacts
 data/
 *.db
+models/*.json
+mystory.txt
+corpus/fantasy/raw/
