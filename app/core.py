@@ -1,9 +1,25 @@
-"""Your code. One stub per milestone; build them in order and keep each one small."""
+"""Your code, one function per milestone. Each builds on the WordFlow engine in wordflow/."""
+
+from pathlib import Path
+
+from wordflow.corpus import corpus_from_file
+from wordflow.preprocessing import tokenize
+
 
 # --- Milestone 1: Prepare a text corpus of short stories.
 # Hint: Use text preprocessing and tokenization to prepare your corpus.
-def milestone_1():  # TODO(milestone 1)
-    raise NotImplementedError("TODO(milestone 1)")
+ROOT = Path(__file__).resolve().parent.parent
+FANTASY_CORPUS = ROOT / "corpus" / "fantasy" / "fantasy.txt"
+
+
+def prepare_corpus(path=FANTASY_CORPUS) -> list[list[str]]:
+    """Load a text file, clean it, split it into sentences and tokenize each one.
+
+    Returns one list of lower-case word tokens per sentence. The default corpus is
+    built from eight public-domain fantasy books (see scripts/build_fantasy_corpus.py).
+    """
+    corpus = corpus_from_file(path)
+    return [tokenize(sentence) for sentence in corpus.sentences]
 
 
 # --- Milestone 2: Implement n-gram counting and maximum-likelihood probabilities.

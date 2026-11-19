@@ -1,13 +1,17 @@
-"""Your tests. Each milestone in README.md gets one here: write the test first, then make it pass.
-
-They start skipped. Remove the `skip` line as you work on each milestone.
-"""
+"""One test per milestone in README.md."""
 import pytest
 
+from app.core import FANTASY_CORPUS, prepare_corpus
+
+
 # Milestone 1: Prepare a text corpus of short stories.
-@pytest.mark.skip(reason="remove this line when you start milestone 1")
 def test_milestone_1():
-    raise NotImplementedError("write the test for milestone 1")
+    """The fantasy corpus loads as lower-case tokenized sentences."""
+    sentences = prepare_corpus(FANTASY_CORPUS)
+    assert len(sentences) > 10_000
+    words = [word for sentence in sentences for word in sentence]
+    assert all(word == word.lower() for word in words)
+    assert "dragon" in words and "gutenberg" not in words
 
 
 # Milestone 2: Implement n-gram counting and maximum-likelihood probabilities.
@@ -32,4 +36,3 @@ def test_milestone_4():
 @pytest.mark.skip(reason="remove this line when you start milestone 5")
 def test_milestone_5():
     raise NotImplementedError("write the test for milestone 5")
-
